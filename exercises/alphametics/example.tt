@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+gem 'minitest', '>= 5.0.0'
+require 'minitest/autorun'
+require_relative 'alphametics'
+
+# Test data version:
+# <%= sha1 %>
+class AlphameticsTest < Minitest::Test<% test_cases.each do |test_case| %>
+  def <%= test_case.test_name %><% if test_case.skipped? %>
+    skip<% end %>
+    assert_equal(
+      Alphametics.solve("<%= test_case.puzzle %>"),
+      <%= test_case.expected %>,
+    )
+  end
+<% end %>
+
+  # Don't forget to define a constant VERSION inside of Alphametics.
+  def test_bookkeeping
+    skip
+    assert_equal <%= version + 1 %>, Alphametics::VERSION
+  end
+end
